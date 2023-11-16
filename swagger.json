@@ -1,0 +1,358 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Atividade - Node JS Express",
+        "description": "API RESTful para gerenciamento de listas de tarefas.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/"
+        }
+    ],
+    "basePath": "/",
+    "paths": {
+        "/task": {
+            "post": {
+                "description": "Cria uma nova tarefa",
+                "tags": ["Tarefas"],
+                "security": [{
+                    "authorization": []
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/requestTask"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/responseTask"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "{ message: Token nao informado! }"
+                    }
+                }
+            },
+            "get": {
+                "description": "Retorna todas as tarefas",
+                "tags": ["Tarefas"],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "$ref": "#/components/schemas/responseTask" 
+                        }
+                    }
+                }
+            }
+        },
+        "/task/{id}": {
+            "get": {
+                "description": "Retorna uma tarefa pelo ID",
+                "tags": ["Tarefas"],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/responseTask" 
+                        }
+                    },
+                    "404": {
+                        "description": "{ message: nenhuma tarefa foi encontrada! }"
+                    }
+                }
+            },
+            "put": {
+                "description": "Atualiza uma tarefa pelo ID",
+                "tags": ["Tarefas"],
+                "security": [{
+                    "authorization": []
+                }],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/requestTask"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "{ message: nenhuma tarefa foi encontrada para atualizar! }"
+                    },
+                    "401": {
+                        "description": "{ message: Token nao informado! }"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deleta uma tarefa pelo ID",
+                "tags": ["Tarefas"],
+                "security": [{
+                    "authorization": []
+                }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "{ message: nenhuma tarefa foi encontrada para deletar! }"
+                    },
+                    "401": {
+                        "description": "{ message: Token nao informado! }"
+                    }
+                }
+            }
+        },
+        "/user": {
+            "post": {
+                "description": "Cria um novo usuario",
+                "tags": ["Usuários"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/requestUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/responseUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "description": "Retorna todos os usuários",
+                "tags": ["Usuários"],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "$ref": "#/components/schemas/responseTask" 
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "description": "Retorna um usuario pelo ID",
+                "tags": ["Usuários"],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/responseUser" 
+                        }
+                    },
+                    "404": {
+                        "description": "{ message: nenhum usuário foi encontrado! }"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "description": "Autentica um usuario cadastrado",
+                "tags": ["Login"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/requestLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/responseLogin"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "{ message: ID ou senha estao incorretos }"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "requestTask": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "done": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "responseTask": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "update_date": {
+                        "type": "string"
+                    },
+                    "done": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "requestUser": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "responseUser": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "requestLogin": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "responseLogin": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "authorization": {
+                "name": "authorization",
+                "type": "apiKey",
+                "in": "header"
+            }
+        }
+    }
+}
