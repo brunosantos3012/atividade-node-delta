@@ -1,0 +1,18 @@
+CREATE DATABASE IF NOT EXISTS todolist;
+
+USE todolist;
+
+CREATE TABLE IF NOT EXISTS tasks (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title LONGTEXT NOT NULL,
+    description LONGTEXT NOT NULL,
+    created_at VARCHAR(45) NOT NULL,
+    update_date VARCHAR(45) NOT NULL,
+    done BOOLEAN NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(45) NOT NULL,
+    password VARCHAR(45) NOT NULL
+);
